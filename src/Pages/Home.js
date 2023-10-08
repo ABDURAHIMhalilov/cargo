@@ -14,7 +14,12 @@ function Home() {
           <img src={logoImg} alt="" />
           {localStorage.getItem("key") ? (
             localStorage.getItem("key") == 1 ? (
-              <div className="bgasc">
+              <div className="bgasc" 
+              style={{
+                width: "27%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}>
                 <a href="/profile">
                   <button>Профиль</button>
                 </a>
@@ -38,7 +43,12 @@ function Home() {
                 <button onClick={() => handlePress()}>Выйти</button>
               </div>
             ) : localStorage.getItem("key") == 3 ? (
-              <div className="bgasc">
+              <div className="bgasc" 
+              style={{
+                width: "27%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}>
                 <a href="/profile">
                   <button>Профиль</button>
                 </a>

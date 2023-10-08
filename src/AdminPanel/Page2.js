@@ -1,7 +1,8 @@
 import React from "react";
 import "./All.css";
 // import AiOutlineArrowLeft from 'react-icons/AiOutlineArrowLeft'
-import {AiOutlineArrowLeft} from 'react-icons/ai'
+import { AiOutlineArrowLeft, AiFillCloseCircle } from "react-icons/ai";
+import axios from "axios";
 
 export default function Page2() {
   function handlePress() {
@@ -13,11 +14,51 @@ export default function Page2() {
     document.querySelector(".MainS").style = "display: block";
     document.querySelector(".opacityDiv").style = "display: none";
   }
+
+  function handlePress3() {
+    document.querySelector(".addOrder").style = "opacity: 1;";
+  }
+
+  function handlePress4() {
+    document.querySelector(".addOrder").style = "opacity: 0;";
+  }
+  function handlePress5() {
+    var data = new FormData();
+    data.append("trackId", document.querySelector(".trackId").value);
+    data.append("sender", localStorage.getItem("id"));
+    axios
+      .post(
+        "https://trak-code.onrender.com/api/orders",
+        {
+          headers: { Authorization: "Bearer " + localStorage.getItem('token') },
+        },
+        data
+      )
+      .then((res) => {
+        document.querySelector(".addOrder").style = "opacity: 0;";
+        alert("succes");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
-    <div style={{ width: "100%" }}>
+    <div
+      style={{ width: "100%", overflow: "hidden", height: "100vh", zIndex: 10 }}
+    >
+      <div className="addOrder">
+        <AiFillCloseCircle
+          className="iconCLose"
+          onClick={() => handlePress4()}
+        />
+        <input type="text" placeholder="track id" className="trackId" />
+        <button onClick={() => handlePress5()}>Add order</button>
+      </div>
       <div className="opacityDiv">
-        <h4 onClick={() => handlePress2()}><AiOutlineArrowLeft style={{ fontSize: 30, cursor: 'pointer' }} /></h4>
-        <h1 style={{ marginLeft: '10%' }}>Обновить заказ</h1>
+        <h4 onClick={() => handlePress2()}>
+          <AiOutlineArrowLeft style={{ fontSize: 30, cursor: "pointer" }} />
+        </h4>
+        <h1 style={{ marginLeft: "10%" }}>Обновить заказ</h1>
         <div style={{ paddingLeft: 140 }}>
           <div
             style={{
@@ -128,21 +169,36 @@ export default function Page2() {
               />
             </div>
           </div>
-          <button style={{ background: '#800000', border: 'none', height: 40, borderRadius: 5, color: 'white', fontWeight: '400', fontSize: 17, marginLeft: 50, marginTop: 10 }}>Обновить заказ</button>
+          <button
+            style={{
+              background: "#800000",
+              border: "none",
+              height: 40,
+              borderRadius: 5,
+              color: "white",
+              fontWeight: "400",
+              fontSize: 17,
+              marginLeft: 50,
+              marginTop: 10,
+            }}
+          >
+            Обновить заказ
+          </button>
         </div>
       </div>
       <div className="MainS" style={{ width: "100%" }}>
         <div className="adminPage1">
           <h1>Все заказы</h1>
           <div className="inpForm1">
-            <input type="file" />
+            {/*<input type="file" />
             <div>
               <h2>Choose file</h2>
               <h2>No file choosen</h2>
-            </div>
-            {/* <input type="file" /> */}
+              </div>
             <button>Загрузить</button>
+          */}
           </div>
+          <button onClick={() => handlePress3()}>New order</button>
         </div>
         <div className="bigOrder">
           <div className="mainOrder">
