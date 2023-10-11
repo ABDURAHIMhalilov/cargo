@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./css/Register.css";
 import logoImg from "../img/logo.jpg";
 import axios from "axios";
+import url from "../host";
 export default function Register() {
   const [email, setEmail] = useState(false);
   const [password, setPassword] = useState(false);
@@ -31,7 +32,7 @@ export default function Register() {
       const data = new FormData()
       data.append('email', Values[0].value)
       data.append('password', Values[1].value)
-        axios.post('https://trak-code.onrender.com/auth/register', data).then(res => {
+        axios.post(`${url}/auth/register`, data).then(res => {
         alert('succes')
         localStorage.setItem('key', 2)
         localStorage.setItem('email', res.data.email)

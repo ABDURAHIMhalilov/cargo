@@ -8,6 +8,23 @@ import { AiOutlineArrowLeft, AiFillCloseCircle } from "react-icons/ai";
 function Home() {
   const [text, setText] = useState("");
   const [data, setData] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [selectedTrek, setSelectedTrek] = useState("");
+  const [selectedTrekId, setSelectedTrekId] = useState("");
+  useEffect(() => {
+    var tokenUser = localStorage.getItem("token");
+    var userId = localStorage.getItem('id')
+    axios
+      .get(`${url}/auth/users`, {
+        headers: { Authorization: "Bearer: " + tokenUser },
+      })
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   function handlePress() {
     localStorage.clear();
     window.location = "/";
@@ -36,11 +53,33 @@ function Home() {
         console.log(err);
       });
   }
-  function handlePress3() {
+  function handlePress3(key) {
+    setSelectedTrekId(key.id);
+    setSelectedTrek(key.trek_id);
     document.querySelector(".MainProject").style = "right: 0;";
   }
   function handlePress4() {
     document.querySelector(".MainProject").style = "right: -100%;";
+  }
+  function handlePress5() {
+    var tokenUser = localStorage.getItem('token')
+    var data = new FormData();
+    data.append("status", 1);
+    data.append("menegerid", document.querySelector(".managerId").value);
+    data.append(
+      "deckription",
+      document.querySelector(".textDesckription").value
+    );
+    data.append("adressuser", document.querySelector(".selectAddress").value);
+    data.append("creator", localStorage.getItem("id"));
+    data.append("oredersid", selectedTrekId);
+    axios.post(`${url}/api/zakaz`, data, {
+      headers: { Authorization: 'Bearer: ' + tokenUser }
+    }).then(res => {
+      alert('succes')
+    }).catch(err => {
+      console.log(err);
+    })
   }
   return (
     <div className="App">
@@ -64,7 +103,9 @@ function Home() {
               // height: 10
             }}
           >
-            <p>Add new project</p>
+            <p>
+              Add new project: <br /> {selectedTrek}
+            </p>
             <AiFillCloseCircle
               onClick={() => handlePress4()}
               style={{ cursor: "pointer" }}
@@ -72,30 +113,69 @@ function Home() {
             />
           </div>
           <p style={{ height: 10, marginTop: 10 }}>insender</p>
-          <select style={{ width: "100%", height: 30 }}>
+          <select
+            style={{ width: "100%", height: 30 }}
+            className="selectAddress"
+          >
             {data.map((item) => {
               return item.insender.map((item2) => {
-                return <option>{item2.address+`(${item2.email})`}</option>;
+                return (
+                  <option value={item2.id}>
+                    {item2.address + `(${item2.email})`}
+                  </option>
+                );
               });
             })}
           </select>
-          <p style={{ height: 10, marginTop: 10 }}>manager</p>
-          <select style={{ width: "100%", height: 30 }}>
-            <option>asd</option>
-          </select>
-          <button
+          <p style={{ height: 10, marginTop: 10 }}>desckription</p>
+          <textarea
             style={{
-              width: "100%",
-              height: 30,
-              marginTop: 10,
-              border: "none",
-              background: "#800000",
-              color: "white",
-              borderRadius: 3,
+              maxWidth: "98%",
+              minWidth: "98%",
+              minHeight: 27,
+              maxHeight: 300,
             }}
-          >
-            Add project
-          </button>
+            className="textDesckription"
+          />
+          <p style={{ height: 10, marginTop: 10 }}>manager</p>
+          <select style={{ width: "100%", height: 30 }} className="managerId">
+            {users.map((item) => {
+              return <option value={item.id}>{item.firstname}({item.address})</option>;
+            })}
+          </select>
+          {localStorage.getItem("id") ? (
+            <button
+              style={{
+                width: "100%",
+                height: 30,
+                marginTop: 10,
+                border: "none",
+                background: "#800000",
+                color: "white",
+                borderRadius: 3,
+              }}
+              onClick={() => handlePress5()}
+            >
+              Add project
+            </button>
+          ) : (
+            <button
+              style={{
+                width: "100%",
+                height: 30,
+                marginTop: 10,
+                border: "none",
+                background: "#800000",
+                color: "white",
+                borderRadius: 3,
+              }}
+              onClick={() => {
+                window.location = "/login";
+              }}
+            >
+              Add project
+            </button>
+          )}
         </div>
       </div>
       <div className="navbar">
@@ -225,7 +305,7 @@ function Home() {
                     border: "none",
                     color: "white",
                   }}
-                  onClick={() => handlePress3()}
+                  onClick={() => handlePress3(item)}
                 >
                   Заказать
                 </button>

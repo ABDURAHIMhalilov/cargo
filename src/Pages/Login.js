@@ -2,6 +2,7 @@ import React from "react";
 import "./css/Login.css";
 import logoImg from "../img/logo.jpg";
 import axios from "axios";
+import url from "../host";
 export default function Login() {
   function handlePress() {
     const email = document.querySelector(".email");
@@ -10,7 +11,7 @@ export default function Login() {
     data.append("email", email.value);
     data.append("password", password.value);
     axios
-      .post("https://trak-code.onrender.com/auth/login", data)
+      .post(`${url}/auth/login`, data)
       .then((res) => {
         alert("succes");
         window.location = "/";
