@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-
+import url from "../host";
 export default function Page4() {
   const [state, setState] = useState([]);
   const [userEmail, setUserEmail] = useState("");
@@ -9,14 +9,20 @@ export default function Page4() {
   const [userAddress, setUserAddress] = useState("");
   const [userID, setUserID] = useState(null);
   const [chkbox, setChkbox] = useState(false);
+  const [firstName, setFirstName] = useState('no');
+  const [lastName, setLastName] = useState('no');
+  const [patronimic, setPatronimic] = useState('no');
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/auth/users", {
-        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      .get(`${url}/auth/users`, {
+        headers: { Authorization: "Bearer: " + localStorage.getItem("token") },
       })
       .then((res) => {
-        setState(res.data);
+        var Filterr = res.data.filter((item) =>
+          item.id === localStorage.getItem("id") ? item : item
+        );
+        setState(Filterr);
       })
       .catch((err) => {
         console.log(err);
@@ -28,8 +34,14 @@ export default function Page4() {
     setUserAddress(key.address);
     setChkbox(key.manager);
     setUserPassword(key.password);
+    setFirstName(key.firstname)
+    setLastName(key.lastname)
+    setPatronimic(key.setPatronimic)
     document.querySelector("#emailInput").value = key.email;
     document.querySelector("#addressInput").value = key.address;
+    document.querySelector('#firstnameInput').value = key.firstname
+    document.querySelector('#patronimicInput').value = key.patronimic
+    document.querySelector('#lastnameInput').value = key.lastname
     document.querySelector(".MainS").style = "display: none";
     document.querySelector(".opacityDiv").style = "display: block";
   }
@@ -47,16 +59,21 @@ export default function Page4() {
     data.append("email", email);
     data.append("address", address);
     data.append("manager", chkbox);
+    data.append("admin", false);
     data.append("password", userPassword);
+    data.append("patronimic", document.querySelector('#patronimicInput').value);
+    data.append("firstname", document.querySelector('#firstnameInput').value);
+    data.append("lastname", document.querySelector('#lastnameInput').value);
     axios
-      .put(`http://localhost:5000/auth/users/${userID}`, data, {
-        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      .put(`${url}/auth/admin/users/${userID}`, data, {
+        headers: { Authorization: "Bearer: " + localStorage.getItem("token") },
       })
       .then((res) => {
         window.location.reload();
       })
       .catch((err) => {
         console.log(err);
+        console.log(userID)
       });
   }
   return (
@@ -80,6 +97,48 @@ export default function Page4() {
                 }}
                 id="emailInput"
                 className="emailInput"
+              />
+            </div>
+            <div style={{}}>
+              <p style={{ height: 7 }}>firstName</p>
+              <input
+                type="text"
+                style={{
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 4,
+                  border: "1px solid gray",
+                }}
+                id="firstnameInput"
+                className="firstnameInput"
+              />
+            </div>
+            <div style={{}}>
+              <p style={{ height: 7 }}>patronimic</p>
+              <input
+                type="text"
+                style={{
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 4,
+                  border: "1px solid gray",
+                }}
+                id="patronimicInput"
+                className="patronimicInput"
+              />
+            </div>
+            <div style={{}}>
+              <p style={{ height: 7 }}>lastname</p>
+              <input
+                type="text"
+                style={{
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 4,
+                  border: "1px solid gray",
+                }}
+                id="lastnameInput"
+                className="lastnameInput"
               />
             </div>
 

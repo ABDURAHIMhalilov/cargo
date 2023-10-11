@@ -1,0 +1,349 @@
+admin@mail.ru
+XHqZuFvG
+
+
+meneger@mail.ru
+0
+
+
+
+   <div style={{ paddingLeft: 140 }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ width: "40%" }}>
+              <span>Отправитель</span>
+              <br />
+              <input
+                type="text"
+                style={{
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 3,
+                  border: "1px solid gray",
+                  marginTop: 10,
+                }}
+              />
+            </div>
+            <div style={{ width: "40%" }}>
+              <span>Получатель</span>
+              <br />
+              <input
+                type="text"
+                style={{
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 3,
+                  border: "1px solid gray",
+                  marginTop: 10,
+                }}
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+              // height: 120
+            }}
+          >
+            <div style={{ width: "40%" }}>
+              <span>Адрес</span>
+              <br />
+              <input
+                type="text"
+                style={{
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 3,
+                  border: "1px solid gray",
+                  marginTop: 10,
+                }}
+              />
+            </div>
+            <div style={{ width: "40%" }}>
+              <span>Адрес</span>
+              <br />
+              <input
+                type="text"
+                style={{
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 3,
+                  border: "1px solid gray",
+                  marginTop: 10,
+                }}
+              />
+            </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-around",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ width: "40%" }}>
+              <span>email</span>
+              <br />
+              <input
+                type="text"
+                style={{
+                  width: "100%",
+                  height: 40,
+                  borderRadius: 3,
+                  border: "1px solid gray",
+                  marginTop: 10,
+                }}
+              />
+            </div>
+          </div>
+          <button
+            style={{
+              background: "#800000",
+              border: "none",
+              height: 40,
+              borderRadius: 5,
+              color: "white",
+              fontWeight: "400",
+              fontSize: 17,
+              marginLeft: 50,
+              marginTop: 10,
+            }}
+          >
+            Обновить заказ
+          </button>
+          <button
+            style={{
+              background: "red",
+              border: "none",
+              height: 40,
+              borderRadius: 5,
+              color: "white",
+              fontWeight: "400",
+              fontSize: 17,
+              marginLeft: 20,
+              marginTop: 10,
+            }}
+            onClick={() => handlePress6()}
+          >
+            Удалит заказ
+          </button>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div className="minOrder" onClick={() => handlePress()}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "30%",
+                }}
+              >
+                <img src="https://github.com/twbs.png" alt="" />
+                <div>
+                  <h1 style={{ height: "7px" }}>YT8929328214977</h1>
+                  <p style={{ marginLeft: 7, fontSize: "15px" }}>
+                    Санкт-Петербург, ул. Рубинштейна 17
+                  </p>
+                </div>
+              </div>
+              <p style={{ marginRight: 7 }}>Доставлено</p>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div
+                  className="Main"
+                  style={{
+                    backgroundColor: "#0d6dfd0a",
+                  }}
+                >
+                  <center>
+                    <h1>Статус заказ: {item.trek_id}</h1>
+                  </center>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "60%",
+                      margin: "auto",
+                    }}
+                  >
+                    <h1>Отправ</h1>
+                    <h1>Кому</h1>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "60%",
+                      margin: "auto",
+                    }}
+                  >
+                    <h1
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        // justifyContent: "space-between",
+                      }}
+                    >
+                      Отправитель:{" "}
+                      <p
+                        style={{
+                          fontSize: 20,
+                          fontWeight: "lighter",
+                          marginLeft: 10,
+                        }}
+                      >
+                        {item.sender}
+                      </p>
+                    </h1>
+                    <h1
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        // justifyContent: "space-between",
+                      }}
+                    >
+                      Получатель:{" "}
+                      <p
+                        style={{
+                          fontSize: 20,
+                          fontWeight: "lighter",
+                          marginLeft: 10,
+                        }}
+                      >
+                        petrov
+                      </p>
+                    </h1>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "60%",
+                      margin: "auto",
+                    }}
+                  >
+                    <h1>Откуда</h1>
+                    <h1>Куда</h1>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "60%",
+                      margin: "auto",
+                      marginTop: -20,
+                    }}
+                  >
+                    <p>Откуда</p>
+                    <p>Куда</p>
+                  </div>
+                  <div
+                    style={{
+                      background: "#fff",
+                      width: "65%",
+                      margin: "auto",
+                      padding: 10,
+                    }}
+                  >
+                    <a href="">Скрить польны маршут</a>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        borderBottom: "1px solid",
+                      }}
+                    >
+                      <h1
+                        style={{ width: "30%", fontWeight: "400", height: 15 }}
+                      >
+                        Дата
+                      </h1>
+                      <h1
+                        style={{ width: "30%", fontWeight: "400", height: 15 }}
+                      >
+                        Статус
+                      </h1>
+                      <h1
+                        style={{ width: "40%", fontWeight: "400", height: 15 }}
+                      >
+                        Место
+                      </h1>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        borderBottom: "1px solid",
+                        paddingRight: 5,
+                        paddingLeft: 5,
+                      }}
+                    >
+                      <p style={{ width: "30%", fontWeight: "400" }}>
+                        6.10.2023
+                      </p>
+                      <p style={{ width: "30%", fontWeight: "400" }}>
+                        Заказ создан
+                      </p>
+                      <p style={{ width: "40%", fontWeight: "400" }}>
+                        sankt peterburg, yл Rub
+                      </p>
+                    </div>
+                  </div>
+                </div>
