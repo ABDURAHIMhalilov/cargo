@@ -65,7 +65,7 @@ export default function Page4() {
     data.append("firstname", document.querySelector('#firstnameInput').value);
     data.append("lastname", document.querySelector('#lastnameInput').value);
     axios
-      .put(`${url}/auth/admin/users/${userID}`, data, {
+      .put(`${url}/auth/admin/${userID}`, data, {
         headers: { Authorization: "Bearer: " + localStorage.getItem("token") },
       })
       .then((res) => {

@@ -23,6 +23,14 @@ export default function Profile() {
       });
   }
   useEffect(() => {
+    axios.get(`${url}/auth/user/`,{headers:{Authorization:"Bearer  "+localStorage.getItem("token")}}).then(res=>{
+      res.data.map(item=>{
+        document.querySelector("#firstname").value=item.firstname
+        document.querySelector("#patronimic").value=item.patronimic
+        document.querySelector("#lastname").value=item.lastname
+        document.querySelector("#passwoed").value=item.password
+      })
+    })
     var emaill = localStorage.getItem("email");
     var address = localStorage.getItem("address");
     
@@ -55,10 +63,13 @@ export default function Profile() {
     var data = new FormData();
     data.append("email", document.querySelector("#email").value);
     data.append("address", document.querySelector("#adres").value);
-    data.append("password", password);
+    data.append("password", document.querySelector("#passwoed").value);
+    data.append("firstname",document.querySelector("#firstname").value)
+    data.append("patronimic",document.querySelector("#patronimic").value)
+    data.append("lastname",document.querySelector("#lastname").value)
     console.log(userId);
     axios
-      .put(`${url}/auth/users/${userId}`, data)
+      .put(`${url}/auth/users/${userId}`, data,{headers:{Authorization:"Bearer  " + localStorage.getItem("token")}})
       .then((res) => {
         localStorage.setItem("email", res.data.email);
         localStorage.setItem("address", res.data.address);
@@ -171,6 +182,22 @@ export default function Profile() {
           <p>Адрес</p>
           <input style={{ paddingLeft: 10 }} id="adres" type="text" />
         </div>
+        <div>
+        <p>Firstname</p>
+        <input style={{ paddingLeft: 10 }} id="firstname" type="text" />
+      </div>
+      <div>
+      <p>Patronimic</p>
+      <input style={{ paddingLeft: 10 }} id="patronimic" type="text" />
+    </div>
+    <div>
+    <p>Lastname</p>
+    <input style={{ paddingLeft: 10 }} id="lastname" type="text" />
+  </div>
+      <div>
+    <p>Password</p>
+    <input style={{ paddingLeft: 10 }} id="passwoed" type="text" />
+  </div>
         <div className="btn-group">
           <button onClick={() => putData()}>Обновить</button>
           <button onClick={() => handleDelete()}>Удалить аккаунт</button>
@@ -223,7 +250,7 @@ export default function Profile() {
                   }}
                 >
                   Отправитель:
-                  <p
+                  {/*<p
                     style={{
                       fontSize: 16,
                       fontWeight: "lighter",
@@ -234,7 +261,7 @@ export default function Profile() {
                     {item.address.lastname.slice(0, 1).toUpperCase()}.
                     {item.address.patronimic.slice(0, 1).toUpperCase()}
                     {" " + item.address.firstname}
-                  </p>
+                  </p>*/}
                 </h1>
                 <h1
                   style={{
@@ -286,35 +313,37 @@ export default function Profile() {
                 <p>
                   {item.meneger.address === null
                     ? "no address"
-                    : item.address.address}
+                    : item.meneger.address}
                 </p>
               </div>
               <div
+              style={{
+                background: "#fff",
+                width: "65%",
+                margin: "auto",
+                padding: 10,
+              }}
+            >
+              <div
                 style={{
-                  background: "#fff",
-                  width: "65%",
-                  margin: "auto",
-                  padding: 10,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  borderBottom: "1px solid",
                 }}
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    borderBottom: "1px solid",
-                  }}
-                >
-                  <h1 style={{ width: "30%", fontWeight: "400", height: 15 }}>
-                    Дата
-                  </h1>
-                  <h1 style={{ width: "30%", fontWeight: "400", height: 15 }}>
-                    Статус
-                  </h1>
-                  <h1 style={{ width: "40%", fontWeight: "400", height: 15 }}>
-                    Место
-                  </h1>
-                </div>
+                <h1 style={{ width: "30%", fontWeight: "400", height: 15 }}>
+                  Дата
+                </h1>
+                <h1 style={{ width: "30%", fontWeight: "400", height: 15 }}>
+                  Статус
+                </h1>
+                <h1 style={{ width: "40%", fontWeight: "400", height: 15 }}>
+                  Место
+                </h1>
+              </div>
+              {item.ponts.map(item1=>{
+                return(
                 <div
                   style={{
                     display: "flex",
@@ -326,21 +355,23 @@ export default function Profile() {
                   }}
                 >
                   <p style={{ width: "30%", fontWeight: "400" }}>
-                    {item.time_create.slice(0, 10)}
+                    {item1.time_create.slice(0, 10)}
                   </p>
                   <p style={{ width: "30%", fontWeight: "400" }}>
-                    {item.status === 1
+                    {item1.status === 1
                       ? "Заказ создан"
-                      : item.status === 2
+                      : item1.status === 2
                       ? "korilmoqda"
                       : "tamom"}
                   </p>
                   <p style={{ width: "40%", fontWeight: "400" }}>
                     {item.address.address === null
                       ? "no address"
-                      : item.address.address}
+                    : item.address.address}
                   </p>
                 </div>
+                )
+              })}
               </div>
             </div>
           );

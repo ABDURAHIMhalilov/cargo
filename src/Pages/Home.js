@@ -19,7 +19,8 @@ function Home() {
         headers: { Authorization: "Bearer: " + tokenUser },
       })
       .then((res) => {
-        setUsers(res.data);
+        const Filter=res.data.filter(item=>item.manager)
+        setUsers(Filter);
       })
       .catch((err) => {
         console.log(err);
