@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Manager from "./Manager";
+import Myzakaz from "./ManagerMyzakaz"
+import MyOrders from "./MyOrders"
 
 export default function MainManager() {
+  const [page,setPage]=useState(0)
+
+
+
   return (
     <div
       style={{
@@ -26,23 +32,90 @@ export default function MainManager() {
         </a>
         <hr />
         <h1
-          style={{
+          onClick={()=>{setPage(0)}}
+          style={
+            page!==0?
+            {
+              fontWeight: 100,
+              fontSize: 20,
+              // background: "#0a58ca",
+              padding: 5,
+              borderRadius: 5,
+              cursor:"pointer"
+            }
+            :
+            {
             fontWeight: 100,
             fontSize: 20,
             background: "#0a58ca",
             padding: 5,
             borderRadius: 5,
-          }}
+            cursor:"pointer"
+            }
+        }
         >
-          Manager
+        Мои заказы
         </h1>
+        <h1
+          onClick={()=>{setPage(1)}}
+          style={
+            page!==1?
+            {
+              fontWeight: 100,
+              fontSize: 20,
+              // background: "#0a58ca",
+              padding: 5,
+              borderRadius: 5,
+              cursor:"pointer"
+            }
+            :
+            {
+            fontWeight: 100,
+            fontSize: 20,
+            background: "#0a58ca",
+            padding: 5,
+            borderRadius: 5,
+            cursor:"pointer"
+            }
+          }
+        >
+        Заказы, полученные мной
+        </h1>
+        <h1
+          onClick={()=>{setPage(2)}}
+          style={
+            page!==2?
+            {
+              fontWeight: 100,
+              fontSize: 20,
+              // background: "#0a58ca",
+              padding: 5,
+              borderRadius: 5,
+              cursor:"pointer"
+            }
+            :
+            {
+            fontWeight: 100,
+            fontSize: 20,
+            background: "#0a58ca",
+            padding: 5,
+            borderRadius: 5,
+            cursor:"pointer"
+            }
+          }
+        >
+        Заказы, полученные мной
+        </h1>
+
         <div
-          style={{
+          style={
+            {
             position: "absolute",
             bottom: 10,
             left: 10,
             fontSize: 12,
-          }}
+            }
+        }
         >
           <h1
             style={{
@@ -53,9 +126,20 @@ export default function MainManager() {
           </h1>
         </div>
       </div>
+      {page==0?
       <div style={{ width: "80%" }}>
         <Manager />
-      </div>
+      </div>:
+      page==1?
+      <div style={{ width: "80%" }}>
+       <Myzakaz />
+      </div>:
+      page==2?
+      <div style={{ width: "80%" }}>
+      <MyOrders />
+      </div>:"" 
+      }
+      
     </div>
   );
 }

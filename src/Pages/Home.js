@@ -29,7 +29,7 @@ function Home() {
   function handlePress() {
     localStorage.clear();
     window.location = "/";
-    window.reload();
+    // window.reload();
   }
   function handlePress2() {
     console.log("key");

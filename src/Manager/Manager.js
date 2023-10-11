@@ -26,7 +26,7 @@ export default function Page2() {
         headers: { Authorization: "Bearer: " + tokenUser },
       })
       .then((res) => {
-        console.log(res.data, "45678");
+        console.log(res.data);
         setData(res.data);
       });
     axios
@@ -42,12 +42,14 @@ export default function Page2() {
       });
   }, []);
   function handlePress(key) {
+    if (key.adressuser==localStorage.getItem("id")) {
     setSelectedId(key.id);
     document.querySelector("#textarea2").value = key.deckription;
     setSelectedPutDescription(key.deckription);
     setSelectedTrack(key.oreder.trek_id);
     document.querySelector(".MainS").style = "display: none";
     document.querySelector(".opacityDiv").style = "display: block";
+    }
   }
   function handlePress2() {
     document.querySelector(".MainS").style = "display: block";

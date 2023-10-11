@@ -4,6 +4,7 @@ import "./All.css";
 import { AiOutlineArrowLeft, AiFillCloseCircle } from "react-icons/ai";
 import axios from "axios";
 import url from "../host";
+import {AiOutlineClose} from "react-icons/ai"
 
 export default function Page2() {
   const [data, setData] = useState([]);
@@ -20,6 +21,7 @@ export default function Page2() {
 
   const [target, setTarget] = useState(0);
   const [target2, setTarget2] = useState(0);
+  const [checkbox,setCheckbox]=useState(false)
   useEffect(() => {
     var tokenUser = localStorage.getItem("token");
     axios
@@ -150,22 +152,77 @@ export default function Page2() {
   }
   function handlePress7() {
     var tokenUser = localStorage.getItem('token')
-    var data = new FormData()
-    data.append('status', document.querySelector('.select5').value)
-    data.append('menegerid', document.querySelector('.select3').value)
-    data.append('deckription', document.querySelector('.textarea2').value)
-    data.append("adressuser", target2);
-    data.append('creator', localStorage.getItem('id'))
-    data.append('oredersid', JSON.parse(document.querySelector(".select4").value).id)
-    axios.put(`${url}/api/zakaz/${selectedId}`, data, {
-      headers: { Authorization: 'Bearer: ' + tokenUser }
-    }).then(res => {
-      window.location.reload()
-      console.log(res.data)
-    }).catch(err => {
-      console.log(err)
+    if(!checkbox){
+      data.map(item=>{
+      if(item.id==selectedId){
+      var data = new FormData()
+      data.append('status', item.status)
+      data.append('menegerid', document.querySelector('.select3').value)
+      data.append('deckription', document.querySelector('.textarea2').value)
+      data.append("adressuser", target2);
+      data.append('creator', item.creator)
+      data.append('oredersid', JSON.parse(document.querySelector(".select4").value).id)
+      axios.put(`${url}/api/zakaz/${selectedId}`, data, {
+        headers: { Authorization: 'Bearer: ' + tokenUser }
+      }).then(res => {
+        window.location.reload()
+        console.log(res.data)
+      }).catch(err => {
+        console.log(err)
+      })
+      }
+    })
+    }else{
+      data.map(item=>{
+        if(item.id==selectedId){
+        var data = new FormData()
+      data.append('status', document.querySelector('.select5').value)
+      data.append('menegerid', document.querySelector('.select3').value)
+      data.append('deckription', document.querySelector('.textarea2').value)
+      data.append("adressuser", target2);
+      data.append('creator', item.creator)
+      data.append('oredersid', JSON.parse(document.querySelector(".select4").value).id)
+      axios.put(`${url}/api/zakaz/${selectedId}`, data, {
+        headers: { Authorization: 'Bearer: ' + tokenUser }
+      }).then(res => {
+        // window.location.reload()
+        var formdata=new FormData()
+        formdata.append("status", document.querySelector('.select5').value)
+        formdata.append("zakaz_id",selectedId)
+        axios.post(`${url}/api/points`,formdata,{headers:{Authorization:"Bearer  " +localStorage.getItem("token")}}).then(res=>{
+          axios
+          .get(`${url}/api/zakaz`, {
+            headers: { Authorization: "Bearer: " + tokenUser },
+          })
+          .then((res) => {
+            console.log(res.data, "45678");
+            setData(res.data);
+          });
+        }).catch(err=>{})
+      }).catch(err => {
+        console.log(err)
+      })
+        }
+      })
+      
+    }
+  }
+
+  function deleteOrder(item){
+    axios.delete(`${url}/api/points/${item.id}`,{headers:{Authorization:"Bearer  "+localStorage.getItem("token")}}).then(res=>{
+      axios
+      .get(`${url}/api/zakaz`, {
+        headers: { Authorization: "Bearer: " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+        console.log(res.data, "45678");
+        setData(res.data);
+      });
+    }).catch(err=>{
+      alert("bo'lmadi")
     })
   }
+
   return (
     <div
       style={{ width: "100%", overflow: "hidden", height: "100vh", zIndex: 10 }}
@@ -248,7 +305,19 @@ export default function Page2() {
                 <option value={JSON.stringify(item)}>{item.trek_id}</option>
               );
             })}
-          </select>
+          </select><br /><br />
+          <input onClick={(e)=>{setCheckbox(e.target.checked)}} type="checkbox" />Status
+           <br /><br />
+          {checkbox?
+          <div>
+          {data.map(item=>{
+            if (item.id==selectedId) {
+              
+                return(
+                  <div style={{padding:'2px',background:'rgb(128, 0, 0)',color:'black',display:"block"}}>{item.ponts.map(item1=>item1.status==1?<p  style={{background:'white',padding:'5px',display:'flex',alignItems:"center",justifyContent:"space-between",}}>Дабавлен   <span><AiOutlineClose onClick={()=>deleteOrder(item1)} /></span></p>:item1.status==2?<p style={{background:'white',padding:'5px',display:'flex',alignItems:"center",justifyContent:"space-between"}}>На рассмотрении  <span><AiOutlineClose onClick={()=>deleteOrder(item1)}/></span></p>:item1.status==3?<p style={{background:'white',padding:'5px',display:'flex',alignItems:"center",justifyContent:"space-between"}}>Законченный <span><AiOutlineClose onClick={()=>deleteOrder(item1)}/></span></p>:"")}</div>
+                )
+            }
+          })}
           <p style={{ height: 3, marginTop: 5 }}>Введите статус</p>
           <select
             // onChange={(e) => e}
@@ -259,6 +328,11 @@ export default function Page2() {
             <option value="2">На рассмотрении</option>
             <option value="3">Законченный</option>
           </select>
+          </div>
+          :""
+          }
+          
+
           <button
             style={{
               background: "#800000",
