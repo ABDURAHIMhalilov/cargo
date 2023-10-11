@@ -6,6 +6,9 @@ import axios from "axios";
 import url from "../host";
 export default function Profile() {
   const [myProject, setMyProject] = useState([]);
+  const [Korish1,setKorish1]=useState()
+
+
   function handlePress() {
     localStorage.clear();
     window.location = "/";
@@ -79,6 +82,8 @@ export default function Profile() {
         console.log(err);
       });
   }
+
+
   return (
     <div className="headd">
       <div className="navbar">
@@ -324,7 +329,10 @@ export default function Profile() {
                 padding: 10,
               }}
             >
-              <div
+             {Korish1!==item.id?<p style={{color:"rgb(128, 0, 0)",cursor:'pointer'}} onClick={()=>{setKorish1(item.id)}}>Zakazni ko'rish</p>:<p style={{color:"rgb(128, 0, 0)",cursor:'pointer'}} onClick={()=>{setKorish1(0)}}>Zakazni yopish</p>}
+              {Korish1==item.id?
+                <>
+                <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -342,7 +350,37 @@ export default function Profile() {
                   Место
                 </h1>
               </div>
-              {item.ponts.map(item1=>{
+              {item.ponts==""?
+              <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                borderBottom: "1px solid",
+                paddingRight: 5,
+                paddingLeft: 5,
+              }}
+            >
+              <p style={{ width: "30%", fontWeight: "400" }}>
+                {item.time_create.slice(0, 10)}
+              </p>
+              <p style={{ width: "30%", fontWeight: "400" }}>
+                {item.status === 1
+                  ? "Заказ создан"
+                  : item.status === 2
+                  ? "Просмотра"
+                  : "Заказ выполнен"}
+              </p>
+              <p style={{ width: "40%", fontWeight: "400" }}>
+                {item.status==2?"":item.status==3?item.meneger.address === null
+                ? "no address"
+                : item.meneger.address:item.address.address === null
+                  ? "no address"
+                : item.address.address}
+              </p>
+            </div>
+              :
+              item.ponts.map(item1=>{
                 return(
                 <div
                   style={{
@@ -361,17 +399,22 @@ export default function Profile() {
                     {item1.status === 1
                       ? "Заказ создан"
                       : item1.status === 2
-                      ? "korilmoqda"
-                      : "tamom"}
+                      ? "Просмотра"
+                      : "Заказ выполнен"}
                   </p>
                   <p style={{ width: "40%", fontWeight: "400" }}>
-                    {item.address.address === null
+                    {item1.status==2?"":item1.status==3?item.meneger.address === null
+                    ? "no address"
+                    : item.meneger.address:item.address.address === null
                       ? "no address"
                     : item.address.address}
                   </p>
                 </div>
                 )
               })}
+                </>
+                :""}
+              
               </div>
             </div>
           );
