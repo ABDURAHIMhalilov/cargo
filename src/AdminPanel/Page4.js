@@ -86,7 +86,7 @@ export default function Page4() {
           <h2>Пользователь</h2>
           <div>
             <div style={{}}>
-              <p style={{ height: 7 }}>email {userEmail}</p>
+              <p style={{ height: 7 }}>Введите email</p>
               <input
                 type="text"
                 style={{
@@ -100,7 +100,7 @@ export default function Page4() {
               />
             </div>
             <div style={{}}>
-              <p style={{ height: 7 }}>firstName</p>
+              <p style={{ height: 7 }}>Введите имя</p>
               <input
                 type="text"
                 style={{
@@ -114,7 +114,7 @@ export default function Page4() {
               />
             </div>
             <div style={{}}>
-              <p style={{ height: 7 }}>patronimic</p>
+              <p style={{ height: 7 }}>Введите patronimic</p>
               <input
                 type="text"
                 style={{
@@ -128,7 +128,7 @@ export default function Page4() {
               />
             </div>
             <div style={{}}>
-              <p style={{ height: 7 }}>lastname</p>
+              <p style={{ height: 7 }}>Введите фамилия</p>
               <input
                 type="text"
                 style={{

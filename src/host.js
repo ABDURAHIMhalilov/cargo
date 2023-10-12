@@ -1,2 +1,2 @@
-var url = 'http://localhost:5000'
+var url = 'https://trak-code.onrender.com'
 export default url

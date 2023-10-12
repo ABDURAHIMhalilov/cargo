@@ -50,15 +50,6 @@ export default function Page1() {
             <div
               className="pagesBlock"
               onClick={() => {
-                setPage2(1);
-                setPage(1);
-              }}
-            >
-              Добавить заказ
-            </div>
-            <div
-              className="pagesBlock"
-              onClick={() => {
                 setPage2(2);
                 setPage(2);
               }}
@@ -77,16 +68,7 @@ export default function Page1() {
             >
               Все заказы
             </div>
-            <div
-              className="pagesBlock"
-              onClick={() => {
-                setPage2(1);
-                setPage(1);
-              }}
-              style={{ backgroundColor: "#0a58ca" }}
-            >
-              Добавить заказ
-            </div>
+          
             <div
               className="pagesBlock"
               onClick={() => {
@@ -107,15 +89,6 @@ export default function Page1() {
               }}
             >
               Все заказы
-            </div>
-            <div
-              className="pagesBlock"
-              onClick={() => {
-                setPage2(1);
-                setPage(1);
-              }}
-            >
-              Добавить заказ
             </div>
             <div
               className="pagesBlock"

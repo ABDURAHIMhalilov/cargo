@@ -347,3 +347,60 @@ meneger@mail.ru
                     </div>
                   </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  <div
+              className="pagesBlock"
+              onClick={() => {
+                setPage2(1);
+                setPage(1);
+              }}
+              style={{ backgroundColor: "#0a58ca" }}
+            >
+              Добавить заказ
+            </div>

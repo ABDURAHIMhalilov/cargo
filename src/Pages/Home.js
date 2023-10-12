@@ -39,16 +39,17 @@ function Home() {
     axios
       .get(`${url}/api/orders/search?trek_id=${textt}`)
       .then((res) => {
-        if (res.data.length === 0) {
-          console.log("aasdfu231234");
-          setData(null);
-        } else {
-          setData(res.data);
-          console.log(res.data);
-          res.data.map((item) => {
-            console.log(item.id);
-          });
-        }
+        setData(res.data);
+        // if (res.data.length === 0) {
+        //   console.log("aasdfu231234");
+        //   setData(null);
+        // } else {
+        //   setData(res.data);
+        //   console.log(res.data);
+        //   res.data.map((item) => {
+        //     console.log(item.id);
+        //   });
+        // }
       })
       .catch((err) => {
         console.log(err);
@@ -105,7 +106,7 @@ function Home() {
             }}
           >
             <p>
-              Add new project: <br /> {selectedTrek}
+              Добавить новый проект: <br /> {selectedTrek}
             </p>
             <AiFillCloseCircle
               onClick={() => handlePress4()}
@@ -113,7 +114,7 @@ function Home() {
               size={24}
             />
           </div>
-          <p style={{ height: 10, marginTop: 10 }}>insender</p>
+          <p style={{ height: 10, marginTop: 10 }}>Введите адрес (отправителя)</p>
           <select
             style={{ width: "100%", height: 30 }}
             className="selectAddress"
@@ -128,7 +129,7 @@ function Home() {
               });
             })}
           </select>
-          <p style={{ height: 10, marginTop: 10 }}>desckription</p>
+          <p style={{ height: 10, marginTop: 10 }}>описание</p>
           <textarea
             style={{
               maxWidth: "98%",
@@ -138,7 +139,7 @@ function Home() {
             }}
             className="textDesckription"
           />
-          <p style={{ height: 10, marginTop: 10 }}>manager</p>
+          <p style={{ height: 10, marginTop: 10 }}>Введите адрес (получателя)</p>
           <select style={{ width: "100%", height: 30 }} className="managerId">
             {users.map((item) => {
               return <option value={item.id}>{item.firstname}({item.address})</option>;
@@ -157,7 +158,7 @@ function Home() {
               }}
               onClick={() => handlePress5()}
             >
-              Add project
+            Добавить
             </button>
           ) : (
             <button
@@ -174,7 +175,7 @@ function Home() {
                 window.location = "/login";
               }}
             >
-              Add project
+            Добавить
             </button>
           )}
         </div>
@@ -271,7 +272,7 @@ function Home() {
         </div>
       </div>
       <div className="Main02" style={{ display: "none" }}>
-        {data === null ? (
+        {data.length === 0 ? (
           <div>
             <center>
               <h1>No results!</h1>

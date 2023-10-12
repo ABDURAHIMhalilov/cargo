@@ -6,8 +6,7 @@ import axios from "axios";
 import url from "../host";
 export default function Profile() {
   const [myProject, setMyProject] = useState([]);
-  const [Korish1,setKorish1]=useState()
-
+  const [Korish1, setKorish1] = useState();
 
   function handlePress() {
     localStorage.clear();
@@ -26,19 +25,23 @@ export default function Profile() {
       });
   }
   useEffect(() => {
-    axios.get(`${url}/auth/user/`,{headers:{Authorization:"Bearer  "+localStorage.getItem("token")}}).then(res=>{
-      res.data.map(item=>{
-        document.querySelector("#firstname").value=item.firstname
-        document.querySelector("#patronimic").value=item.patronimic
-        document.querySelector("#lastname").value=item.lastname
-        document.querySelector("#passwoed").value=item.password
+    axios
+      .get(`${url}/auth/user/`, {
+        headers: { Authorization: "Bearer  " + localStorage.getItem("token") },
       })
-    })
+      .then((res) => {
+        res.data.map((item) => {
+          document.querySelector("#firstname").value = item.firstname;
+          document.querySelector("#patronimic").value = item.patronimic;
+          document.querySelector("#lastname").value = item.lastname;
+          document.querySelector("#passwoed").value = item.password;
+        });
+      });
     var emaill = localStorage.getItem("email");
     var address = localStorage.getItem("address");
-    
+
     var tokenUser = localStorage.getItem("token");
-    var add = (address==null? "" : address);
+    var add = address == null ? "" : address;
     document.querySelector("#email").value = emaill;
     document.querySelector("#adres").value = add;
     axios
@@ -67,12 +70,14 @@ export default function Profile() {
     data.append("email", document.querySelector("#email").value);
     data.append("address", document.querySelector("#adres").value);
     data.append("password", document.querySelector("#passwoed").value);
-    data.append("firstname",document.querySelector("#firstname").value)
-    data.append("patronimic",document.querySelector("#patronimic").value)
-    data.append("lastname",document.querySelector("#lastname").value)
+    data.append("firstname", document.querySelector("#firstname").value);
+    data.append("patronimic", document.querySelector("#patronimic").value);
+    data.append("lastname", document.querySelector("#lastname").value);
     console.log(userId);
     axios
-      .put(`${url}/auth/users/${userId}`, data,{headers:{Authorization:"Bearer  " + localStorage.getItem("token")}})
+      .put(`${url}/auth/users/${userId}`, data, {
+        headers: { Authorization: "Bearer  " + localStorage.getItem("token") },
+      })
       .then((res) => {
         localStorage.setItem("email", res.data.email);
         localStorage.setItem("address", res.data.address);
@@ -82,7 +87,6 @@ export default function Profile() {
         console.log(err);
       });
   }
-
 
   return (
     <div className="headd">
@@ -180,29 +184,59 @@ export default function Profile() {
       <div className="bigCard2">
         <h1>Пользователь</h1>
         <div>
-          <p>email</p>
-          <input style={{ paddingLeft: 10 }} id="email" type="text" />
+          <p>Введите email</p>
+          <input
+            style={{ paddingLeft: 10 }}
+            placeholder="email"
+            id="email"
+            type="text"
+          />
         </div>
         <div>
-          <p>Адрес</p>
-          <input style={{ paddingLeft: 10 }} id="adres" type="text" />
+          <p>Введите Адрес</p>
+          <input
+            style={{ paddingLeft: 10 }}
+            placeholder="Адрес"
+            id="adres"
+            type="text"
+          />
         </div>
         <div>
-        <p>Firstname</p>
-        <input style={{ paddingLeft: 10 }} id="firstname" type="text" />
-      </div>
-      <div>
-      <p>Patronimic</p>
-      <input style={{ paddingLeft: 10 }} id="patronimic" type="text" />
-    </div>
-    <div>
-    <p>Lastname</p>
-    <input style={{ paddingLeft: 10 }} id="lastname" type="text" />
-  </div>
-      <div>
-    <p>Password</p>
-    <input style={{ paddingLeft: 10 }} id="passwoed" type="text" />
-  </div>
+          <p>Введите имя</p>
+          <input
+            style={{ paddingLeft: 10 }}
+            placeholder="имя"
+            id="firstname"
+            type="text"
+          />
+        </div>
+        <div>
+          <p>Введите patronimic</p>
+          <input
+            style={{ paddingLeft: 10 }}
+            placeholder="patronimic"
+            id="patronimic"
+            type="text"
+          />
+        </div>
+        <div>
+          <p>Введите фамилия</p>
+          <input
+            style={{ paddingLeft: 10 }}
+            placeholder="фамилия"
+            id="lastname"
+            type="text"
+          />
+        </div>
+        <div>
+          <p>Введите пароль</p>
+          <input
+            style={{ paddingLeft: 10 }}
+            placeholder="пароль"
+            id="passwoed"
+            type="text"
+          />
+        </div>
         <div className="btn-group">
           <button onClick={() => putData()}>Обновить</button>
           <button onClick={() => handleDelete()}>Удалить аккаунт</button>
@@ -322,99 +356,133 @@ export default function Profile() {
                 </p>
               </div>
               <div
-              style={{
-                background: "#fff",
-                width: "65%",
-                margin: "auto",
-                padding: 10,
-              }}
-            >
-             {Korish1!==item.id?<p style={{color:"rgb(128, 0, 0)",cursor:'pointer'}} onClick={()=>{setKorish1(item.id)}}>Zakazni ko'rish</p>:<p style={{color:"rgb(128, 0, 0)",cursor:'pointer'}} onClick={()=>{setKorish1(0)}}>Zakazni yopish</p>}
-              {Korish1==item.id?
-                <>
-                <div
                 style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
-                  borderBottom: "1px solid",
+                  background: "#fff",
+                  width: "65%",
+                  margin: "auto",
+                  padding: 10,
                 }}
               >
-                <h1 style={{ width: "30%", fontWeight: "400", height: 15 }}>
-                  Дата
-                </h1>
-                <h1 style={{ width: "30%", fontWeight: "400", height: 15 }}>
-                  Статус
-                </h1>
-                <h1 style={{ width: "40%", fontWeight: "400", height: 15 }}>
-                  Место
-                </h1>
-              </div>
-              {item.ponts==""?
-              <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-                borderBottom: "1px solid",
-                paddingRight: 5,
-                paddingLeft: 5,
-              }}
-            >
-              <p style={{ width: "30%", fontWeight: "400" }}>
-                {item.time_create.slice(0, 10)}
-              </p>
-              <p style={{ width: "30%", fontWeight: "400" }}>
-                {item.status === 1
-                  ? "Заказ создан"
-                  : item.status === 2
-                  ? "Просмотра"
-                  : "Заказ выполнен"}
-              </p>
-              <p style={{ width: "40%", fontWeight: "400" }}>
-                {item.status==2?"":item.status==3?item.meneger.address === null
-                ? "no address"
-                : item.meneger.address:item.address.address === null
-                  ? "no address"
-                : item.address.address}
-              </p>
-            </div>
-              :
-              item.ponts.map(item1=>{
-                return(
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    borderBottom: "1px solid",
-                    paddingRight: 5,
-                    paddingLeft: 5,
-                  }}
-                >
-                  <p style={{ width: "30%", fontWeight: "400" }}>
-                    {item1.time_create.slice(0, 10)}
+                {Korish1 !== item.id ? (
+                  <p
+                    style={{ color: "rgb(128, 0, 0)", cursor: "pointer" }}
+                    onClick={() => {
+                      setKorish1(item.id);
+                    }}
+                  >
+                    читать далее
                   </p>
-                  <p style={{ width: "30%", fontWeight: "400" }}>
-                    {item1.status === 1
-                      ? "Заказ создан"
-                      : item1.status === 2
-                      ? "Просмотра"
-                      : "Заказ выполнен"}
+                ) : (
+                  <p
+                    style={{ color: "rgb(128, 0, 0)", cursor: "pointer" }}
+                    onClick={() => {
+                      setKorish1(0);
+                    }}
+                  >
+                    закрыть
                   </p>
-                  <p style={{ width: "40%", fontWeight: "400" }}>
-                    {item1.status==2?"":item1.status==3?item.meneger.address === null
-                    ? "no address"
-                    : item.meneger.address:item.address.address === null
-                      ? "no address"
-                    : item.address.address}
-                  </p>
-                </div>
-                )
-              })}
-                </>
-                :""}
-              
+                )}
+                {Korish1 == item.id ? (
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        borderBottom: "1px solid",
+                      }}
+                    >
+                      <h1
+                        style={{ width: "30%", fontWeight: "400", height: 15 }}
+                      >
+                        Дата
+                      </h1>
+                      <h1
+                        style={{ width: "30%", fontWeight: "400", height: 15 }}
+                      >
+                        Статус
+                      </h1>
+                      <h1
+                        style={{ width: "40%", fontWeight: "400", height: 15 }}
+                      >
+                        Место
+                      </h1>
+                    </div>
+                    {item.ponts == "" ? (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          borderBottom: "1px solid",
+                          paddingRight: 5,
+                          paddingLeft: 5,
+                        }}
+                      >
+                        <p style={{ width: "30%", fontWeight: "400" }}>
+                          {item.time_create.slice(0, 10)}
+                        </p>
+                        <p style={{ width: "30%", fontWeight: "400" }}>
+                          {item.status === 1
+                            ? "Заказ создан"
+                            : item.status === 2
+                            ? "Просмотра"
+                            : "Заказ выполнен"}
+                        </p>
+                        <p style={{ width: "40%", fontWeight: "400" }}>
+                          {item.status == 2
+                            ? ""
+                            : item.status == 3
+                            ? item.meneger.address === null
+                              ? "no address"
+                              : item.meneger.address
+                            : item.address.address === null
+                            ? "no address"
+                            : item.address.address}
+                        </p>
+                      </div>
+                    ) : (
+                      item.ponts.map((item1) => {
+                        return (
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              width: "100%",
+                              borderBottom: "1px solid",
+                              paddingRight: 5,
+                              paddingLeft: 5,
+                            }}
+                          >
+                            <p style={{ width: "30%", fontWeight: "400" }}>
+                              {item1.time_create.slice(0, 10)}
+                            </p>
+                            <p style={{ width: "30%", fontWeight: "400" }}>
+                              {item1.status === 1
+                                ? "Заказ создан"
+                                : item1.status === 2
+                                ? "Просмотра"
+                                : "Заказ выполнен"}
+                            </p>
+                            <p style={{ width: "40%", fontWeight: "400" }}>
+                              {item1.status == 2
+                                ? ""
+                                : item1.status == 3
+                                ? item.meneger.address === null
+                                  ? "no address"
+                                  : item.meneger.address
+                                : item.address.address === null
+                                ? "no address"
+                                : item.address.address}
+                            </p>
+                          </div>
+                        );
+                      })
+                    )}
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           );
