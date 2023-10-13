@@ -272,12 +272,30 @@ export default function Page2() {
     var data = new FormData();
     data.append("trek_id", document.querySelector(".trekInp").value);
     data.append("sender", 0);
+    var a = document.querySelectorAll(".flesh");
+
     axios
       .post(`${url}/api/orders`, data, {
         headers: { Authorization: "Bearer: " + localStorage.getItem("token") },
       })
       .then((res) => {
-        window.location.reload();
+        for (let i = 0; i < a.length; i++) {
+          var data2 = {
+            orders_id: res.data[0].id,
+            sender: document.querySelectorAll(".flesh")[i].value,
+          };
+          axios
+            .post(`${url}/api/ordersaddress`, data2, {
+              headers: {
+                Authorization: "Bearer: " + localStorage.getItem("token"),
+              },
+            })
+            .then((res) => {
+              window.location.reload();
+            }).catch(err => {
+              console.log(err);
+            })
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -287,10 +305,36 @@ export default function Page2() {
     setLengthh([lengthh, +lengthh]);
     setLengthh2(document.querySelectorAll("textarea").length);
   }
+
   return (
     <div
       style={{ width: "100%", overflow: "hidden", height: "100vh", zIndex: 10 }}
     >
+      <div className="addOrder2">
+        <AiFillCloseCircle
+          className="iconCLose"
+          onClick={() => handlePress44()}
+        />
+        <input
+          style={{ width: "95%", marginTop: 10 }}
+          placeholder="trek_id"
+          className="trekInp"
+        />
+        <div className="addIput"></div>
+        <button
+          onClick={() => {
+            var ddd = `<select className="flesh">`;
+            managers.map((item, key) => {
+              ddd = ddd + `<option value="" >${item.id}</option>`;
+            });
+            ddd = ddd + `</select>`;
+            document.querySelector(".addIput").innerHTML += ddd;
+          }}
+        >
+          add address this order
+        </button>
+        <button onClick={() => handlePress55()}>Add</button>
+      </div>
       <div className="addOrder">
         {/*<AiFillCloseCircle
           className="iconCLose"
@@ -303,7 +347,6 @@ export default function Page2() {
           className="iconCLose"
           onClick={() => handlePress4()}
         />
-        <h1>{lengthh2}</h1>
         {lengthh.map((item) => {
           return (
             <div style={{ marginTop: 10 }}>
@@ -341,29 +384,6 @@ export default function Page2() {
         <h1>{selectedAddress.map((item) => item.sender)}</h1>
         <button onClick={() => handlePress8()}>plus</button>
         <button onClick={() => handlePress5()}>Add</button>
-      </div>
-      <div className="addOrder2">
-        <AiFillCloseCircle
-          className="iconCLose"
-          onClick={() => handlePress44()}
-        />
-        <div className="addIput">
-          <input
-            style={{ width: "95%", marginTop: 10 }}
-            placeholder="trek_id"
-            className="trekInp"
-          />
-        </div>
-        <button onClick={()=>{
-document.querySelector(".addIput").innerHTML+=`   <input
-style={{ width: "95%", marginTop: 10 }}
-placeholder="add address this order"
-className="add_order"
-/>`
-
-
-        }}>add address this order</button>
-        <button onClick={() => handlePress55()}>Add</button>
       </div>
       <div className="opacityDiv">
         <h4 onClick={() => handlePress2()}>
