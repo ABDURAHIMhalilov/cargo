@@ -272,18 +272,23 @@ export default function Page2() {
     var data = new FormData();
     data.append("trek_id", document.querySelector(".trekInp").value);
     data.append("sender", 0);
-    var a = document.querySelectorAll(".flesh");
-
+    
     axios
       .post(`${url}/api/orders`, data, {
         headers: { Authorization: "Bearer: " + localStorage.getItem("token") },
       })
       .then((res) => {
+        var a = document.querySelectorAll(".flesh");
+        alert("zor")
         for (let i = 0; i < a.length; i++) {
-          var data2 = {
-            orders_id: res.data[0].id,
-            sender: document.querySelectorAll(".flesh")[i].value,
-          };
+          // var data2 = {
+          //   orders_id: res.data[0].id,
+          //   sender: document.querySelectorAll(".flesh")[i].value,
+          // };
+          var data2=new FormData()
+          data2.append("orders_id",res.data[0].id)
+          data2.append("sender",document.querySelectorAll(".flesh")[i].value)
+
           axios
             .post(`${url}/api/ordersaddress`, data2, {
               headers: {
@@ -291,9 +296,9 @@ export default function Page2() {
               },
             })
             .then((res) => {
-              window.location.reload();
+              // window.location.reload();
             }).catch(err => {
-              console.log(err);
+              alert("salom")
             })
         }
       })
