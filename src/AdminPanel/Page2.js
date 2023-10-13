@@ -22,6 +22,11 @@ export default function Page2() {
   const [target, setTarget] = useState(0);
   const [target2, setTarget2] = useState(0);
   const [checkbox, setCheckbox] = useState(false);
+
+  const [ lengthh, setLengthh ] = useState([1])
+  const [ lengthh2, setLengthh2 ] = useState(document.querySelectorAll('textarea').length)
+
+
   useEffect(() => {
     var tokenUser = localStorage.getItem("token");
     axios
@@ -277,6 +282,10 @@ export default function Page2() {
         console.log(err);
       });
   }
+  function handlePress8 () {
+    setLengthh([lengthh,+lengthh])
+    setLengthh2(document.querySelectorAll('textarea').length)
+  }
   return (
     <div
       style={{ width: "100%", overflow: "hidden", height: "100vh", zIndex: 10 }}
@@ -293,33 +302,43 @@ export default function Page2() {
           className="iconCLose"
           onClick={() => handlePress4()}
         />
-        <select
-          className="select1"
-          style={{ width: "100%", height: 35, marginTop: 10 }}
-        >
-          {managers.map((item) => {
-            return <option value={item.id}>{item.firstname}</option>;
-          })}
-        </select>
-        <textarea
-          style={{ maxWidth: "98%", minWidth: "98%", marginTop: 10 }}
-          placeholder="desckription"
-          className="textarea"
-        />
-        <select
-          onChange={(e) => {
-            console.log(JSON.parse(e.target.value));
-            setTarget(JSON.parse(e.target.value).sender);
-            setSelectedAddress(JSON.parse(e.target.value).insender);
-          }}
-          className="select2"
-          style={{ width: "100%", height: 35, marginTop: 10 }}
-        >
-          {order.map((item) => {
-            return <option value={JSON.stringify(item)}>{item.trek_id}</option>;
-          })}
-        </select>
+        <h1>{lengthh2}</h1>
+        {
+          lengthh.map(item => {
+            return(
+              <div style={{ marginTop: 10 }}>
+              <select
+                className="select1"
+                style={{ width: "100%", height: 35, marginTop: 10 }}
+              >
+                {managers.map((item) => {
+                  return <option value={item.id}>{item.firstname}</option>;
+                })}
+              </select>
+              <textarea
+                style={{ maxWidth: "98%", minWidth: "98%", marginTop: 10 }}
+                placeholder="desckription"
+                className="textarea"
+              />
+              <select
+                onChange={(e) => {
+                  console.log(JSON.parse(e.target.value));
+                  setTarget(JSON.parse(e.target.value).sender);
+                  setSelectedAddress(JSON.parse(e.target.value).insender);
+                }}
+                className="select2"
+                style={{ width: "100%", height: 35, marginTop: 10 }}
+              >
+                {order.map((item) => {
+                  return <option value={JSON.stringify(item)}>{item.trek_id}</option>;
+                })}
+              </select>
+              </div>
+            )
+          })
+        }
         <h1>{selectedAddress.map((item) => item.sender)}</h1>
+        <button onClick={() => handlePress8()}>plus</button>
         <button onClick={() => handlePress5()}>Add</button>
       </div>
       <div className="addOrder2">
