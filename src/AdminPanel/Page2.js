@@ -256,7 +256,27 @@ export default function Page2() {
         alert("bo'lmadi");
       });
   }
-
+  function handlePress33() {
+    document.querySelector(".addOrder2").style = "display: block;";
+  }
+  function handlePress44() {
+    document.querySelector(".addOrder2").style = "display: none;";
+  }
+  function handlePress55() {
+    var data = new FormData();
+    data.append("trek_id", document.querySelector(".trekInp").value);
+    data.append("sender", localStorage.getItem("id"));
+    axios
+      .post(`${url}/api/orders`, data, {
+        headers: { Authorization: "Bearer: " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
     <div
       style={{ width: "100%", overflow: "hidden", height: "100vh", zIndex: 10 }}
@@ -301,6 +321,25 @@ export default function Page2() {
         </select>
         <h1>{selectedAddress.map((item) => item.sender)}</h1>
         <button onClick={() => handlePress5()}>Add</button>
+      </div>
+      <div className="addOrder2">
+        {/*<AiFillCloseCircle
+          className="iconCLose"
+          onClick={() => handlePress4()}
+        />
+        <input type="text" placeholder="track id" className="trackId" />
+        <button onClick={() => handlePress5()}>Add order</button>
+  */}
+        <AiFillCloseCircle
+          className="iconCLose"
+          onClick={() => handlePress44()}
+        />
+        <input
+          style={{ width: "95%", marginTop: 10 }}
+          placeholder="trek_id"
+          className="trekInp"
+        />
+        <button onClick={() => handlePress55()}>Add</button>
       </div>
       <div className="opacityDiv">
         <h4 onClick={() => handlePress2()}>
@@ -486,6 +525,12 @@ export default function Page2() {
             <button>Загрузить</button>
           */}
           </div>
+          <button
+            style={{ width: 120, height: 35, borderRadius: 5, border: "none" }}
+            onClick={() => handlePress33()}
+          >
+            Новый order
+          </button>
           <button
             style={{ width: 120, height: 35, borderRadius: 5, border: "none" }}
             onClick={() => handlePress3()}
