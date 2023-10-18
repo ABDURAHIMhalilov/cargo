@@ -5,6 +5,7 @@ import { AiOutlineArrowLeft, AiFillCloseCircle } from "react-icons/ai";
 import axios from "axios";
 import url from "../host";
 import { AiOutlineClose } from "react-icons/ai";
+import {FcPlus} from "react-icons/fc"
 
 export default function Page2() {
   const [data, setData] = useState([]);
@@ -14,6 +15,7 @@ export default function Page2() {
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState([]);
   const [selectedAddress2, setSelectedAddress2] = useState([]);
+  const [postModal,setpostModal]=useState([])
 
   const [selectedPutManagerId, setSelectedPutManagerId] = useState(null);
   const [selectedPutDescription, setSelectedPutDescription] = useState("");
@@ -31,6 +33,14 @@ export default function Page2() {
       .then((res) => {
         console.log(res.data, "45678");
         setData(res.data);
+        setTimeout(() => {
+          res.data.map((item,key)=>{
+            // document.querySelectorAll("#meneger_input")[key].value=item.meneger.id
+            // document.querySelectorAll("#destcription_input")[key].value=item.deckription
+            // document.querySelectorAll("#tre_code_input")[key].value=item.oreder.id
+            document.querySelectorAll("#status_input")[key].value=item.status
+          })
+        }, 1000);
       });
     axios
       .get(`${url}/auth/users`, {
@@ -257,6 +267,52 @@ export default function Page2() {
       });
   }
 
+  function zakazSend(){
+
+  }
+  function zakazPut(){
+    for (let i = 0; i < data.length; i++) {
+      if(data[i].status==document.querySelectorAll("#status_input")[i].value){
+      }else{
+        var formdata=new FormData()
+        formdata.append("adressuser",data[i].adressuser)
+        formdata.append("creator",data[i].creator)
+        formdata.append("deckription",data[i].deckription)
+        formdata.append("menegerid",data[i].menegerid)
+        formdata.append("oredersid",data[i].oredersid)
+        formdata.append("status",document.querySelectorAll("#status_input")[i].value)
+  
+        axios.put(`${url}/api/zakaz/${data[i].id}`,formdata,{headers:{Authorization:"Bearer  "+localStorage.getItem("token")}}).then(res=>{
+         var ponts=new FormData()
+         ponts.append("status",document.querySelectorAll("#status_input")[i].value)
+         ponts.append("zakaz_id",data[i].id)
+  
+         axios.post(`${url}/api/points`,ponts,{headers:{Authorization:"Bearer  "+localStorage.getItem("token")}}).then(res=>{
+          var tokenUser = localStorage.getItem("token");
+          axios
+            .get(`${url}/api/zakaz`, {
+              headers: { Authorization: "Bearer: " + tokenUser },
+            })
+            .then((res) => {
+              console.log(res.data, "45678");
+              setData(res.data);
+              setTimeout(() => {
+                res.data.map((item,key)=>{
+                  // document.querySelectorAll("#meneger_input")[key].value=item.meneger.id
+                  // document.querySelectorAll("#destcription_input")[key].value=item.deckription
+                  // document.querySelectorAll("#tre_code_input")[key].value=item.oreder.id
+                  document.querySelectorAll("#status_input")[key].value=item.status
+                })
+              }, 100);
+            });
+         }).catch(err=>{
+            console.log(err,"xato");
+         })
+        })
+      }
+    }
+  }
+
   return (
     <div
       style={{ width: "100%", overflow: "hidden", height: "100vh", zIndex: 10 }}
@@ -475,7 +531,7 @@ export default function Page2() {
         </div>
       </div>
       <div className="MainS" style={{ width: "100%" }}>
-        <div className="adminPage1">
+        <div style={{width:'90%'}} className="adminPage1">
           <h1>Все заказы</h1>
           <div className="inpForm1">
             {/*<input type="file" />
@@ -486,12 +542,12 @@ export default function Page2() {
             <button>Загрузить</button>
           */}
           </div>
-          <button
+          {/*<button
             style={{ width: 120, height: 35, borderRadius: 5, border: "none" }}
             onClick={() => handlePress3()}
           >
             Новый заказ
-          </button>
+        </button>*/}
         </div>
         <div className="bigOrder">
           <div className="mainOrder">
@@ -514,7 +570,7 @@ export default function Page2() {
               </div>
               <p style={{ marginRight: 7 }}>Доставлено</p>
               </div>*/}
-            {data.map((item) => {
+            {/*{data.map((item) => {
               return (
                 <div className="minOrder" onClick={() => handlePress(item)}>
                   <div
@@ -542,8 +598,53 @@ export default function Page2() {
                   </h1>
                 </div>
               );
-            })}{" "}
-            {/* <div className="minOrder">
+            })}*/}
+            <tr>
+            <th>Meneger</th>
+            <th>AddressUser</th>
+            <th>Creator</th>
+            <th>Destcription</th>
+            <th>tre_code</th>
+            <th>Status</th>
+            </tr>
+             {data.map(item=>{
+              return(
+                <tr>
+                <td>
+                <input value={item.meneger.address} id="meneger_input" type="text" />
+                </td>
+                <td>
+                <input value={item.address.address?item.address.address:"none"} type="text" />
+                </td>
+                <td>
+                <input value={item.create.address} id="creator_input" type="text" />
+                </td>
+                <td><input value={item.deckription} id="destcription_input" type="text" /></td>
+                <td>
+                {/*<select  id="tre_code_input">
+                {order.map(item1=>{
+                  return<option value={item1.id}>{item1.trek_id}</option>
+                })}
+              </select>*/}
+                <input type="text" value={item.oreder.trek_id} />
+                </td>
+                <td>
+                <select  id="status_input">
+                <option value="1">Дабавлен</option>
+                <option value="2">Просмотра</option>
+                <option value="3">Законченный</option>
+                </select>
+                </td>
+                {/*<AiOutlineClose/>*/}
+                </tr>
+              )
+             })}
+
+             <div style={{display:'flex',alignItems:'center',justifyContent:'end',marginTop:'10px'}}>
+             <button onClick={()=>zakazPut()} className="edit_button">Edit</button>
+             {/*<FcPlus onClick={()=>zakazSend()} className="zakaz_plus"/>*/}
+             </div>
+             {/* <div className="minOrder">
             <img src="https://github.com/twbs.png" alt="" />
             <h1>YT8929328214977</h1>
           </div> */}

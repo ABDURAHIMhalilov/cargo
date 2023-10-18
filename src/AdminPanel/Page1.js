@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Page4 from "./Page4";
+import Meneger from "./MenegerPage"
 import "./All.css";
 
 export default function Page1() {
@@ -56,6 +57,24 @@ export default function Page1() {
             >
               Пользователи
             </div>
+            <div
+              className="pagesBlock"
+              onClick={() => {
+                setPage2(3);
+                setPage(3);
+              }}
+            >
+              Meneger
+            </div>
+            <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(4);
+              setPage(4);
+            }}
+          >
+            Qoshish zakaz
+          </div>
           </>
         ) : page2 === 1 ? (
           <>
@@ -63,7 +82,7 @@ export default function Page1() {
               className="pagesBlock"
               onClick={() => {
                 setPage2(0);
-                setPage(0);
+                setPage(0); 
               }}
             >
               Все заказы
@@ -78,6 +97,24 @@ export default function Page1() {
             >
               Пользователи
             </div>
+            <div
+              className="pagesBlock"
+              onClick={() => {
+                setPage2(3);
+                setPage(3);
+              }}
+            >
+              Meneger
+            </div>
+            <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(4);
+              setPage(4);
+            }}
+          >
+            Qoshish zakaz
+          </div>
           </>
         ) : page2 === 2 ? (
           <>
@@ -100,8 +137,107 @@ export default function Page1() {
             >
               Пользователи
             </div>
+            <div
+              className="pagesBlock"
+              onClick={() => {
+                setPage2(3);
+                setPage(3);
+              }}
+            >
+              Meneger
+            </div>
+            <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(4);
+              setPage(4);
+            }}
+          >
+            Qoshish zakaz
+          </div>
           </>
-        ) : (
+        ) : page2===3?(
+          <>
+          <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(0);
+              setPage(0);
+            }}
+          >
+            Все заказы
+          </div>
+          <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(2);
+              setPage(2);
+            }}
+          >
+            Пользователи
+          </div>
+          <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(3);
+              setPage(3);
+            }}
+            style={{ backgroundColor: "#0a58ca" }}
+          >
+            Meneger
+          </div>
+          <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(4);
+              setPage(4);
+            }}
+          >
+            Qoshish zakaz
+          </div>
+        </>
+        ):page2===4?(
+          <>
+          <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(0);
+              setPage(0);
+            }}
+          >
+            Все заказы
+          </div>
+          <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(2);
+              setPage(2);
+            }}
+          >
+            Пользователи
+          </div>
+          <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(3);
+              setPage(3);
+            }}
+          >
+            Meneger
+          </div>
+          <div
+            className="pagesBlock"
+            onClick={() => {
+              setPage2(4);
+              setPage(4);
+            }}
+            style={{ backgroundColor: "#0a58ca" }}
+          >
+            Qoshish zakaz
+          </div>
+        </>
+        ):
+        (
           ""
         )}
         <div className="pagesAd">
@@ -116,9 +252,12 @@ export default function Page1() {
           <Page3 />
         ) : page === 2 ? (
           <Page4 />
-        ) : (
-          ""
-        )}
+        ) : page === 3?(
+          <Meneger/>
+        ) :page === 4?(
+          <Page3/>
+        ) :("")
+        }
       </div>
     </div>
   );
