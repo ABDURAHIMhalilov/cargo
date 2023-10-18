@@ -73,7 +73,7 @@ export default function Page1() {
               setPage(4);
             }}
           >
-            Qoshish zakaz
+          Добавить заказ
           </div>
           </>
         ) : page2 === 1 ? (
@@ -113,7 +113,7 @@ export default function Page1() {
               setPage(4);
             }}
           >
-            Qoshish zakaz
+          Добавить заказ
           </div>
           </>
         ) : page2 === 2 ? (
@@ -153,7 +153,7 @@ export default function Page1() {
               setPage(4);
             }}
           >
-            Qoshish zakaz
+          Добавить заказ
           </div>
           </>
         ) : page2===3?(
@@ -193,7 +193,7 @@ export default function Page1() {
               setPage(4);
             }}
           >
-            Qoshish zakaz
+          Добавить заказ
           </div>
         </>
         ):page2===4?(
@@ -233,7 +233,7 @@ export default function Page1() {
             }}
             style={{ backgroundColor: "#0a58ca" }}
           >
-            Qoshish zakaz
+          Добавить заказ
           </div>
         </>
         ):
