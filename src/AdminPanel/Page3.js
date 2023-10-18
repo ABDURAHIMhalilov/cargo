@@ -198,7 +198,7 @@ export default function Page3() {
           >
             Добавить промежуточный пункт
           </button> 
-          <div id="punk" style={{ width: "75%", margin: "auto", marginTop: 30,height:'40vh',overflow:'scroll' }}>
+          <div id="punk" style={{ width: "75%", margin: "auto", marginTop: 30,height:'30vh',overflow:'scroll' }}>
             <div style={{ width: "80%", marginTop: 10 }}>
               <span>Пункт 1</span>
               <br />
